@@ -61,10 +61,6 @@ function render({ current: c, hourly: h, daily: d }) {
   $("wind").textContent = `${round(c.wind_speed_10m)} mph`;
   $("precip").textContent = `${c.precipitation} in`;
 
-  // Background theme
-  const code = c.weather_code;
-  document.body.className = !c.is_day ? "night" : code >= 51 ? "rain" : code >= 3 ? "cloudy" : "";
-
   // Hourly
   $("hourly").innerHTML = h.time
     .map((t, i) => {
@@ -148,4 +144,31 @@ async function search(q) {
   }
 }
 
+// Greeting
+const NAME = "Bo Lott";
+function greet() {
+  const h = new Date().getHours();
+  const part = h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+  $("greeting").textContent = `${part}, ${NAME}`;
+}
+
+// Theme: light, dark, or system (follows the OS setting)
+function setTheme(choice) {
+  const root = document.documentElement;
+  if (choice === "system") delete root.dataset.theme;
+  else root.dataset.theme = choice;
+  try { localStorage.setItem("theme", choice); } catch (e) {}
+  document.querySelectorAll("[data-theme-choice]").forEach((b) => {
+    b.setAttribute("aria-checked", String(b.dataset.themeChoice === choice));
+  });
+}
+
+document.querySelectorAll("[data-theme-choice]").forEach((b) => {
+  b.addEventListener("click", () => setTheme(b.dataset.themeChoice));
+});
+
+let savedTheme = "system";
+try { savedTheme = localStorage.getItem("theme") || "system"; } catch (e) {}
+setTheme(savedTheme);
+greet();
 loadWeather(DEFAULT);

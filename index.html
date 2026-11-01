@@ -5,9 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Weather</title>
   <link rel="stylesheet" href="style.css" />
+  <script>
+    // Apply saved theme before paint to avoid a flash
+    try {
+      const t = localStorage.getItem("theme");
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
 </head>
 <body>
   <main class="app">
+    <header class="top">
+      <p id="greeting" class="greeting">Hello, Bo Lott</p>
+      <div class="glass theme-switch" role="radiogroup" aria-label="Theme">
+        <button type="button" data-theme-choice="light" role="radio">Light</button>
+        <button type="button" data-theme-choice="dark" role="radio">Dark</button>
+        <button type="button" data-theme-choice="system" role="radio">System</button>
+      </div>
+    </header>
+
     <form id="search" class="glass search" autocomplete="off">
       <input id="query" type="search" placeholder="Search city" aria-label="Search city" />
       <ul id="results" class="glass results" hidden></ul>
