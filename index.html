@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Weather</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <form id="search" class="glass search" autocomplete="off">
+      <input id="query" type="search" placeholder="Search city" aria-label="Search city" />
+      <ul id="results" class="glass results" hidden></ul>
+    </form>
+
+    <section class="glass current">
+      <h1 id="place">Clyde, Texas</h1>
+      <div id="temp" class="temp">--°</div>
+      <div id="condition" class="condition">Loading…</div>
+      <div id="range" class="range"></div>
+    </section>
+
+    <section class="glass">
+      <h2>Hourly</h2>
+      <div id="hourly" class="hourly"></div>
+    </section>
+
+    <section class="glass">
+      <h2>7-Day Forecast</h2>
+      <ul id="daily" class="daily"></ul>
+    </section>
+
+    <section class="details">
+      <div class="glass tile"><h2>Feels Like</h2><p id="feels">--</p></div>
+      <div class="glass tile"><h2>Humidity</h2><p id="humidity">--</p></div>
+      <div class="glass tile"><h2>Wind</h2><p id="wind">--</p></div>
+      <div class="glass tile"><h2>Precipitation</h2><p id="precip">--</p></div>
+    </section>
+
+    <p class="credit">Data from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
