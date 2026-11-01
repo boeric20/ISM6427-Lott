@@ -3,10 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Weather</title>
+  <title>Lott Weather</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <script>
-    // Apply saved theme before paint to avoid a flash
+    // Apply saved theme before first paint to avoid a flash
     try {
       const t = localStorage.getItem("theme");
       if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
@@ -14,47 +17,53 @@
   </script>
 </head>
 <body>
-  <main class="app">
+  <div class="app">
     <header class="top">
-      <p id="greeting" class="greeting">Hello, Bo Lott</p>
-      <div class="glass theme-switch" role="radiogroup" aria-label="Theme">
-        <button type="button" data-theme-choice="light" role="radio">Light</button>
-        <button type="button" data-theme-choice="dark" role="radio">Dark</button>
-        <button type="button" data-theme-choice="system" role="radio">System</button>
+      <div class="where">
+        <p id="greeting" class="greeting">Hello, Bo Lott</p>
+        <div class="place-row">
+          <h1 id="place">Clyde, Texas</h1>
+          <span id="clock" class="muted"></span>
+        </div>
+      </div>
+
+      <nav class="tabs pill" role="tablist" aria-label="Sections">
+        <button role="tab" data-tab="today">Today</button>
+        <button role="tab" data-tab="air">Air Quality</button>
+        <button role="tab" data-tab="outlook">16-Day</button>
+        <button role="tab" data-tab="history">History</button>
+        <button role="tab" data-tab="solar">Solar</button>
+      </nav>
+
+      <div class="controls">
+        <form id="search" class="search" autocomplete="off" role="search">
+          <input id="query" type="search" placeholder="Search city" aria-label="Search city" />
+          <ul id="results" class="results" hidden></ul>
+        </form>
+        <div class="pill seg" role="radiogroup" aria-label="Temperature unit">
+          <button type="button" role="radio" data-unit="F">°F</button>
+          <button type="button" role="radio" data-unit="C">°C</button>
+        </div>
+        <div class="pill seg" role="radiogroup" aria-label="Theme">
+          <button type="button" role="radio" data-theme-choice="light">Light</button>
+          <button type="button" role="radio" data-theme-choice="dark">Dark</button>
+          <button type="button" role="radio" data-theme-choice="system">System</button>
+        </div>
       </div>
     </header>
 
-    <form id="search" class="glass search" autocomplete="off">
-      <input id="query" type="search" placeholder="Search city" aria-label="Search city" />
-      <ul id="results" class="glass results" hidden></ul>
-    </form>
+    <p id="status" class="status" hidden></p>
 
-    <section class="glass current">
-      <h1 id="place">Clyde, Texas</h1>
-      <div id="temp" class="temp">--°</div>
-      <div id="condition" class="condition">Loading…</div>
-      <div id="range" class="range"></div>
-    </section>
+    <main>
+      <section class="panel grid" id="panel-today" role="tabpanel"></section>
+      <section class="panel grid" id="panel-air" role="tabpanel" hidden></section>
+      <section class="panel grid" id="panel-outlook" role="tabpanel" hidden></section>
+      <section class="panel grid" id="panel-history" role="tabpanel" hidden></section>
+      <section class="panel grid" id="panel-solar" role="tabpanel" hidden></section>
+    </main>
 
-    <section class="glass">
-      <h2>Hourly</h2>
-      <div id="hourly" class="hourly"></div>
-    </section>
-
-    <section class="glass">
-      <h2>7-Day Forecast</h2>
-      <ul id="daily" class="daily"></ul>
-    </section>
-
-    <section class="details">
-      <div class="glass tile"><h2>Feels Like</h2><p id="feels">--</p></div>
-      <div class="glass tile"><h2>Humidity</h2><p id="humidity">--</p></div>
-      <div class="glass tile"><h2>Wind</h2><p id="wind">--</p></div>
-      <div class="glass tile"><h2>Precipitation</h2><p id="precip">--</p></div>
-    </section>
-
-    <p class="credit">Data from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></p>
-  </main>
+    <footer class="credit">Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0)</footer>
+  </div>
   <script src="app.js"></script>
 </body>
 </html>
